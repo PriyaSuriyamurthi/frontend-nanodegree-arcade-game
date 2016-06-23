@@ -26,7 +26,7 @@ var Engine = (function(global) {
         lastTime;
 
     canvas.width = 505;
-    canvas.height = 606;
+    canvas.height = 906;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -80,9 +80,19 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
+        checkDestinations();
     }
 
+    function checkCollisions() {
+         player.checkCollision(); 
+        
+    }
+
+    function checkDestinations() {
+        player.checkDestination();
+    }
+   
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
@@ -95,6 +105,9 @@ var Engine = (function(global) {
             enemy.update(dt);
         });
         player.update();
+        level.levelUpdate();
+        
+
     }
 
     /* This function initially draws the "game level", it will then call
@@ -112,7 +125,7 @@ var Engine = (function(global) {
                 'images/stone-block.png',   // Row 1 of 3 of stone
                 'images/stone-block.png',   // Row 2 of 3 of stone
                 'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
+                'images/stone-block.png',   // Row 1 of 2 of grass
                 'images/grass-block.png'    // Row 2 of 2 of grass
             ],
             numRows = 6,
@@ -147,11 +160,17 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
+         destination.render();
+        key.render();
         allEnemies.forEach(function(enemy) {
             enemy.render();
         });
 
         player.render();
+        countable.lifeRender();
+        level.levelRender();
+        countable.scoreRender();
+
     }
 
     /* This function does nothing but it could have been a good place to
@@ -171,7 +190,15 @@ var Engine = (function(global) {
         'images/water-block.png',
         'images/grass-block.png',
         'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-girl.png',
+        'images/home.png',
+        'images/key-icon.png',
+        'images/key-small.png',
+        'images/treasure.png',
+        'images/homestone.png',
+        'images/heart.png',
+        'images/heart-broken.png'
     ]);
     Resources.onReady(init);
 

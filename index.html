@@ -4,10 +4,29 @@
     <meta charset="UTF-8">
     <title>Effective JavaScript: Frogger</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="http://priyasuriyamurthi.github.io/css/bootstrap.min.css">
 </head>
 <body>
+<div class="modal fade" id="message" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">   
+                  <h1 class="modal-title">You Lost</h1>                  
+                  </div>
+                  <div class="modal-body">
+                  <img class="img-responsive" src="images/lost-game.png" alt="Lost Game">
+                  <h3>It Seems you have lost all your life.Please Try again.</h3>
+                  </div>
+                  <div class="modal-footer">
+                     <button type="button" class="btn btn-default" data-dismiss="modal">Try Again</button>
+                  </div>
+               </div>
+            </div>
+  </div>
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 </body>
 </html>

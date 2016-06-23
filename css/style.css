@@ -1,3 +1,12 @@
 body {
     text-align: center;
 }
+#message {
+	display:none;
+    font-family: "Cookie", cursive;
+    color: #bd7635;
+    font-size: 25px;    
+}
+.modal-body>img {
+    margin: 0 auto;
+}
