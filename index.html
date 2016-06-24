@@ -7,6 +7,53 @@
     <link rel="stylesheet" href="http://priyasuriyamurthi.github.io/css/bootstrap.min.css">
 </head>
 <body>
+
+<div class="modal fade" id="gameStart" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+   <div class="modal-dialog">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <div class="modal-header">   
+                  <h1 class="modal-title">Frogger Game</h1>                  
+                  </div>
+                  <div class="modal-body">
+                   <h3>Rules for the Game</h3>
+                   <h4> Uses these keys to move the player around the game.</h4>
+                  <img class="img-responsive align" src="images/arrow_keys.png" alt="Keys to play"> 
+                  <br>
+                  <ul>
+                  <li>Don't enter the water </li>
+                  <li>Grab the gems as quickly as possible before they disappear</li>
+                  <li>collect the key to reach the castle</li> 
+                  </ul>
+                  <h3>Choose a Player</h3>
+                  <input type="radio" name="ninja" value="male" checked> 
+                  <label class="radio-inline">
+                  <img class="img-responsive" src="images/char-boy.png" alt="char boy"> Boy
+                  </label>
+                  <input type="radio" name="ninja" value="female"> 
+                  <label class="radio-inline">
+                  <img class="img-responsive" src="images/char-girl.png" alt="Char girl">  Girl
+                  </label>
+                  <input type="radio" name="ninja" value="horngirl">
+                  <label class="radio-inline">
+                  <img class="img-responsive" src="images/char-horn-girl.png" alt="horn Girl"> Horn Girl
+                  </label>
+                  <input type="radio" name="ninja" value="pinkgirl">
+                  <label class="radio-inline">
+                  <img class="img-responsive" src="images/char-pink-girl.png" alt="pink Girl"> Pink Girl
+                  </label>
+                  <input type="radio" name="ninja" value="princessgirl">  
+                  <label class="radio-inline">
+                  <img class="img-responsive" src="images/char-princess-girl.png" alt="princess Girl"> Princess Girl
+                  </label>
+                  </div> 
+                  <div class="modal-footer">
+                  <button type="button" id="buttonRadio" class="btn btn-default" data-dismiss="modal">Click to enter the game</button>
+                  </div>
+               </div>
+            </div>
+  </div>
+</div>
 <div class="modal fade" id="message" tabindex="-1" role="dialog" aria-hidden="true" data-keyboard="false" data-backdrop="static">
             <div class="modal-dialog">
                <div class="modal-content">
@@ -23,10 +70,17 @@
                </div>
             </div>
   </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+      <script> 
+      
+      $('#gameStart').modal("show");
+      
+     
+    </script>
     <script src="js/resources.js"></script>
     <script src="js/app.js"></script>
     <script src="js/engine.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+
 </body>
 </html>

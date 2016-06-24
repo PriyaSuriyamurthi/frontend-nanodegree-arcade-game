@@ -1,12 +1,45 @@
 
 // Enemies our player must avoid
+var allEnemies =[];
+var player;
+var destination;
+var key;
+var countable;
+var level;
+var collectables;
 var selectY= [60,150,230,310];
 var selectX= [-100,-200,-300,-400];
 var homeX = [0,100,200,300,400];
 var keyX = [0,100,200,300,400];
-var keyY= [80,160,240,320];
+var keyY= [80,240];
+var itemX = [0,100,200,300,400];
+var itemY= [190,350];
 var uniqueY = selectY;
 var threshold= 40;
+var score = {calc :
+                [{"level" :"initial",
+                    "points": 0},
+                    {"level" :"key",
+                    "points": 5},
+                    {"level":"destination",
+                     "points": 10},
+                     {"level":"collectables",
+                     "points": 50}
+                    ]
+            };
+var item =
+{
+    gem :
+    [{"pic" : "images/diamond-icon.png",
+      "level":  1},
+    {"pic" : "images/gem-icon.png",
+      "level":  3},       
+    {"pic" : "images/treasure.png",
+      "level":  5}],
+    destroyed: false,
+    destroyTime :4500
+
+};
 
 var Enemy = function() {
     // Variables applied to each of our instances go here,
@@ -33,11 +66,17 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers. 
-            for (var i=1; i <= level.currentLevel;i++)
-            {            
-             this.x = this.x + (dt * 100 * i * Math.random());
+            if (level.currentLevel === 1)
+            {
+                this.x = this.x + (dt * 180 *  Math.random());
             }
-              if( this.x > 500){
+            else{
+            for (var i=2; i <= level.currentLevel;i++)
+            {            
+             this.x = this.x + (dt * 150 * i/2 * Math.random());
+            }
+        }
+              if( this.x > 400){
               this.x = selectX[Math.floor(Math.random() * selectX.length)];
           }
         
@@ -52,12 +91,26 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
-var Player = function() {
+var Player = function(playerPic) {
     this.x = 300;
     this.y = 400;
-    
-    this.sprite = 'images/char-girl.png';
-    //this.sprite = 'images/enemy-bug.png';
+    switch (playerPic) {
+        case "male":
+        this.sprite = 'images/char-boy.png';
+        break;
+        case "female":
+        this.sprite = 'images/char-girl.png';
+        break;
+        case "horngirl":
+        this.sprite = 'images/char-horn-girl.png';
+        break;
+        case "pinkgirl":
+        this.sprite = 'images/char-pink-girl.png';
+        break;
+        case "princessgirl":
+        this.sprite = 'images/char-princess-girl.png';
+    }
+
 };
 
 var Countable = function() {
@@ -69,7 +122,15 @@ var Countable = function() {
 var Level = function() {
     this.currentLevel = 1;
     this.totalLevel = 5;
+    
 }
+
+var  Collectables = function() {
+    this.x = itemX[Math.floor(Math.random() * itemX.length)];
+    this.y = itemY[Math.floor(Math.random() * itemY.length)];
+    this.gemAcquired = false;
+     
+};
 
 Player.prototype.update = function(pos) {
     if((pos === 'left') && ((this.x -100) >= 0)){
@@ -84,7 +145,9 @@ Player.prototype.update = function(pos) {
     else if((pos === 'down') && ((this.y +80) <= 400)){
          this.y = (this.y +80);
     }    
-    
+    else if(pos ==='stop-up') {
+        this.y =(this.y + 80);
+    }
 
 };
 
@@ -131,8 +194,25 @@ Player.prototype.checkCollision = function()
             key.y = player.y + 80;
             key.playerAcquired = true;
             key.render();
-            countable.totalScore += 5;
+            scoreCalculation("key");
             key.update();
+    }
+     if(player.y > collectables.y)
+        {
+        differenceY = player.y - collectables.y;
+        }
+        else
+         {
+           differenceY = collectables.y - player.y;
+         }   
+    if((player.x === collectables.x) && (differenceY <= threshold) && (!item.destroyed))
+    {
+        item.destroyed = true;
+        if( collectables.gemAcquired === false)
+        {
+        scoreCalculation("collectables");
+        collectables.gemAcquired = true;
+        }
     }
 
 };
@@ -160,20 +240,9 @@ Player.prototype.checkDestination = function() {
     var destDifferenceX = destination.x - player.x;  
     var destDifferenceY = destination.y - player.y;  
     if((destDifferenceX === 0) && (destDifferenceY === 0) 
-        && (key.playerAcquired === true) )
+        && (key.playerAcquired) )
     {   
-            
-            player.x = 300;
-            player.y = 400;
-            player.render();
-            key.x = keyX[Math.floor(Math.random() * keyX.length)];
-            key.y = keyY[Math.floor(Math.random() * keyY.length)];
-            key.sprite = 'images/key-icon.png';
-            key.playerAcquired = false;
-            destination.reachDestination = true;
-            countable.scoreUpdate();
-            level.currentLevel += 1;
-            level.resetLevel();
+          destinationReached();
             
     }
     else if((destDifferenceX != 0) && (destDifferenceY === 0))
@@ -181,6 +250,11 @@ Player.prototype.checkDestination = function() {
             countable.lifeCount -= 1;
             countable.deathCount += 1;
             countable.lifeUpdate();
+    }
+    else if((key.playerAcquired === false) && (destDifferenceX === 0) && (destDifferenceY === 0))
+    {
+        
+        player.update('stop-up');
     }
 };
 
@@ -227,6 +301,7 @@ Level.prototype.levelRender = function() {
       ctx.strokeStyle = 'black';     
       ctx.strokeText("LEVEL ",250, 635);
       ctx.fillText("LEVEL ",250, 635);
+      
 }
 
 Level.prototype.levelUpdate = function() 
@@ -246,7 +321,28 @@ Level.prototype.resetLevel = function()
 {
       
       destination.reachDestination = false;
-  }
+}
+
+Collectables.prototype.render = function()
+{
+
+    var currentLevel = level.currentLevel;
+    for(var i =0;i<item.gem.length;i++)
+    {       
+        if(item.gem[i].level === currentLevel)
+        {            
+            if(item.destroyed === false){
+            ctx.drawImage(Resources.get(item.gem[i].pic), this.x, this.y);
+                     var destroyTime = 4000;
+            setTimeout(function () {
+                item.destroyed = true;
+            }, destroyTime);
+
+            break;
+            }
+        }
+    }    
+}
 
 Countable.prototype.scoreRender = function() {
 
@@ -257,23 +353,14 @@ Countable.prototype.scoreRender = function() {
       ctx.strokeStyle = 'black';     
       ctx.strokeText("SCORE :",150, 800);
       ctx.fillText("SCORE :",150, 800);
-
+      scoreCalculation("initial");
 }
+
 
 Countable.prototype.scoreUpdate = function()
 {
      
-      if(countable.treasureAcquired)
-      {
-        this.totalScore += 15; 
-      }
-      
-      if(destination.reachDestination === true)
-      {
-        this.totalScore += (level.currentLevel * 5);
-      } 
-
-      ctx.clearRect(150,705,280,280); 
+      ctx.clearRect(240,705,280,280); 
       ctx.fillStyle="green";
       ctx.font="36px Arial";
       ctx.textAlign = 'center';
@@ -283,6 +370,8 @@ Countable.prototype.scoreUpdate = function()
       ctx.fillText(this.totalScore,280, 800);
 
 }
+
+
 
 var Destination = function() {
     
@@ -299,11 +388,10 @@ Destination.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-var Valuables = function() {
-
-}
 
 var Key = function() {
+    
+    
     
     this.x = keyX[Math.floor(Math.random() * keyX.length)];
     this.y = keyY[Math.floor(Math.random() * keyY.length)];
@@ -337,16 +425,8 @@ Key.prototype.update = function() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-var allEnemies =[];
-for(var i =0;i< ((Math.random() * 10)+1);i++){
-allEnemies.push(new Enemy());
-}
-console.log(allEnemies.length);
-var player = new Player();
-var destination = new Destination();
-var key = new Key();
-var countable = new Countable();
-var level = new Level();
+
+
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
@@ -356,8 +436,9 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-
+     if (player) {
     player.handleInput(allowedKeys[e.keyCode]);
+    }
 });
 
 function errorModal() {
@@ -371,6 +452,7 @@ function errorModal() {
 }
 
 function gameReset() {
+    item.destroyed = false;
     level.currentLevel = 1;
     level.totalLevel = 5;
     countable.lifeCount = 3;
@@ -384,5 +466,35 @@ function gameReset() {
     key.playerAcquired = false;
     destination.reachDestination = false;
     countable.treasureAcquired = false;
+    collectables.gemAcquired = false;
+    
 }
 
+function destinationReached() {
+            player.x = 300;
+            player.y = 400;
+            player.render();
+            key.x = keyX[Math.floor(Math.random() * keyX.length)];
+            key.y = keyY[Math.floor(Math.random() * keyY.length)];
+            key.sprite = 'images/key-icon.png';
+            key.playerAcquired = false;
+            scoreCalculation("destination");
+            destination.reachDestination = true;
+            item.destroyed = false;
+            level.currentLevel += 1;
+            collectables.gemAcquired = false;
+            level.resetLevel();
+            
+}
+
+function scoreCalculation(reach) {
+        for(var i =0;i<score.calc.length;i++){
+        if( reach ===  score.calc[i].level)
+        {
+        countable.totalScore += score.calc[i].points;
+        break;
+        }
+        }
+        countable.scoreUpdate();
+
+}

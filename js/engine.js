@@ -24,11 +24,16 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
+    var playerPic;
 
-    canvas.width = 505;
+    canvas.width = 605;
     canvas.height = 906;
+    
+    
+    
     doc.body.appendChild(canvas);
-
+    
+   
     /* This function serves as the kickoff point for the game loop itself
      * and handles properly calling the update and render methods.
      */
@@ -45,6 +50,7 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
+      
         update(dt);
         render();
 
@@ -59,6 +65,18 @@ var Engine = (function(global) {
         win.requestAnimationFrame(main);
     }
 
+    var gameBegin = function() {
+        
+        for(var i =0;i< ((Math.random() * 20)+1);i++){
+        allEnemies.push(new Enemy());
+        }  
+        player = new Player(playerPic);
+        destination = new Destination();
+        key = new Key();
+        countable = new Countable();
+        level = new Level();
+        collectables = new Collectables();
+    }
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
      * game loop.
@@ -66,8 +84,17 @@ var Engine = (function(global) {
     function init() {
         reset();
         lastTime = Date.now();
-        main();
+        $("#buttonRadio").click(function()
+        {
+        playerChosen = $("input[name='ninja']:checked").val();    
+         });
+        $(document).on('hide.bs.modal','#gameStart', function () {
+            playerPic = playerChosen;
+            gameBegin();
+            main();
+         });
     }
+
 
     /* This function is called by main (our game loop) and itself calls all
      * of the functions which may need to update entity's data. Based on how
@@ -160,7 +187,8 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-         destination.render();
+        collectables.render();
+        destination.render();
         key.render();
         allEnemies.forEach(function(enemy) {
             enemy.render();
@@ -192,13 +220,22 @@ var Engine = (function(global) {
         'images/enemy-bug.png',
         'images/char-boy.png',
         'images/char-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
         'images/home.png',
         'images/key-icon.png',
         'images/key-small.png',
         'images/treasure.png',
         'images/homestone.png',
         'images/heart.png',
-        'images/heart-broken.png'
+        'images/heart-broken.png',
+        'images/diamond-icon.png',
+        'images/gem-icon.png',
+        'images/snowflake-icon.png',
+        'images/heart-life-icon.png',
+        'images/treasure.png'
+
     ]);
     Resources.onReady(init);
 

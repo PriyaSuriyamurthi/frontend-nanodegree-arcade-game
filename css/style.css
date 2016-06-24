@@ -7,6 +7,11 @@ body {
     color: #bd7635;
     font-size: 25px;    
 }
-.modal-body>img {
-    margin: 0 auto;
+.modal
+{
+	height:100%;
+	width:100%;
+}
+.modal ul {
+	text-align: start;
 }
