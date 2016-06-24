@@ -72,7 +72,7 @@ Enemy.prototype.update = function(dt) {
         this.x = this.x + (dt * 180 * Math.random());
     } else {
         for (var i = 2; i <= level.currentLevel; i++) {
-            this.x = this.x + (dt * 90 * i / 2 * Math.random());
+            this.x = this.x + (dt * 90 * i * Math.random());
         }
     }
     if (this.x > 400) {

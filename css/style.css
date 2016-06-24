@@ -14,11 +14,11 @@ body {
     max-width: 100%;
 }
 
-.imageCenter,
-    text-align: start;
+.imageCenter
+{
+    margin: 0px auto;
 }
 
-.imageCenter,
-.modal-footer {
-    margin: 0px auto;
+#textAlign {
+	text-align: start;
 }
