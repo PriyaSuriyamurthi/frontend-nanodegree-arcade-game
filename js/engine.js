@@ -26,7 +26,7 @@ var Engine = (function(global) {
         lastTime;
     var playerPic;
 
-    canvas.width = 605;
+    canvas.width = 505;
     canvas.height = 906;
     
     
@@ -50,10 +50,11 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-      
+        if(destination.reachDestination === false){
         update(dt);
         render();
-
+        }
+       
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
          */
@@ -66,17 +67,15 @@ var Engine = (function(global) {
     }
 
     var gameBegin = function() {
-        
         for(var i =0;i< ((Math.random() * 20)+1);i++){
         allEnemies.push(new Enemy());
         }  
         player = new Player(playerPic);
         destination = new Destination();
         key = new Key();
-        countable = new Countable();
         level = new Level();
         collectables = new Collectables();
-    }
+    };
     /* This function does some initial setup that should only occur once,
      * particularly setting the lastTime variable that is required for the
      * game loop.
@@ -107,19 +106,8 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        checkCollisions();
-        checkDestinations();
     }
 
-    function checkCollisions() {
-         player.checkCollision(); 
-        
-    }
-
-    function checkDestinations() {
-        player.checkDestination();
-    }
-   
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
@@ -128,13 +116,14 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
         player.update();
+        player.checkCollision(); 
+        player.checkDestination();
         level.levelUpdate();
-        
-
     }
 
     /* This function initially draws the "game level", it will then call
@@ -195,9 +184,9 @@ var Engine = (function(global) {
         });
 
         player.render();
-        countable.lifeRender();
+        player.lifeRender();
         level.levelRender();
-        countable.scoreRender();
+        player.scoreRender();
 
     }
 
