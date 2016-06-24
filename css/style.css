@@ -14,12 +14,11 @@ body {
     max-width: 100%;
 }
 
-.modal ul {
+.imageCenter,
     text-align: start;
 }
 
-#arrowImage,
-#wonImage,
+.imageCenter,
 .modal-footer {
     margin: 0px auto;
 }

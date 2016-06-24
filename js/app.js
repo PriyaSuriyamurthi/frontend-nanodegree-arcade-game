@@ -11,9 +11,9 @@ var homeX = [0, 100, 200, 300, 400];
 var keyX = [0, 100, 200, 300, 400];
 var keyY = [160, 320];
 var itemX = [0, 100, 200, 300, 400];
-var itemY = [110, 280];
+var itemY = [100, 270];
 var uniqueY = selectY;
-var threshold = 30;
+var threshold = 40;
 var score = {
     calc: [{
         "level": "initial",
