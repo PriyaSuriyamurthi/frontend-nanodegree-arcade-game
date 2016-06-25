@@ -1,6 +1,6 @@
-Frogger Game:
+<h1>Frogger Game:</h1>
 
-Description: 
+<h2>Description: </h2>
 
 1. This game has 5 levels and the goal of the player is to reach the castle .
 2. choose the player from the option given.
@@ -15,6 +15,7 @@ Description:
 6. Player had 3 heart so save your life from the enemies.
 7. If you fail, don't worry you always have another chance.
 
+<h2>Entity</h2>
 <h2> Choose from different players </h2>
 <img src="https://github.com/PriyaSuriyamurthi/frontend-nanodegree-arcade-game/blob/master/images/char-boy.png">
 <img src="https://github.com/PriyaSuriyamurthi/frontend-nanodegree-arcade-game/blob/master/images/char-girl.png">
@@ -44,3 +45,7 @@ Description:
 
 <h2> Arrow keys to use for movement </h2>
 <img src="https://github.com/PriyaSuriyamurthi/frontend-nanodegree-arcade-game/blob/master/images/arrow_keys.png">
+
+<h2>Demo: </h2>
+<Click the link for the demo> <a href="http://priyasuriyamurthi.github.io/game/index.html" target="_blank">Game Demo</a>
+<Click the link for the demo> <a href="https://github.com/PriyaSuriyamurthi/frontend-nanodegree-arcade-game" target="_blank">Github </a>
