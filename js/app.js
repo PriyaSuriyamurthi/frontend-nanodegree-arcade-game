@@ -35,12 +35,12 @@ window.Entity = function(x,y,entityImage) {
     this.x = x;
     this.y = y;
     this.sprite = entityImage;
-}
+};
 
 Entity.prototype.render = function() 
 {
   ctx.drawImage(Resources.get(this.sprite), this.x, this.y);  
-}
+};
 
 // Enemies our player must avoid
 window.Enemy = function() { 
@@ -289,7 +289,7 @@ Player.prototype.errorModal = function() {
         thisPlayer.gameReset();
     });
 
-}
+};
 
 // Reset the game
 Player.prototype.gameReset = function() {
@@ -308,7 +308,7 @@ Player.prototype.gameReset = function() {
     this.treasureAcquired = false;
     collectables.gemAcquired = false;
 
-}
+};
 
 // Player reaches the detaination. Decide if he completes all the levels
 Player.prototype.destinationReached = function() {
@@ -334,7 +334,7 @@ Player.prototype.destinationReached = function() {
         });
     }
 
-}
+};
 
 // based on the inputs like destination, key or treasure, score would be calculated
 Player.prototype.scoreCalculation = function(reach) {
@@ -361,7 +361,7 @@ Player.prototype.scoreCalculation = function(reach) {
     }
     this.scoreUpdate();
 
-}
+};
 
 // 5 levels are there
 window.Level = function() {
