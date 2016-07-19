@@ -2,12 +2,12 @@
 
 <h2>Description: </h2>
 
-1. This game has 5 levels and the goal of the player is to reach the castle .
+1. This game has 5 levels and the goal of the player is to reach the castle.
 2. choose the player from the option given.
 3. Player has to be on stone or grass. He can't swim.
-4. Player earns points for each collectable
+4. Player earns points for each collectable.
 <ul>
-<li> 5 points for key</li>
+<li> 5 points for key.</li>
 <li> 10 points for reaching the castle on each level. </li>
 <li> 50 points for collecting the valuables. </li>
 </ul>
@@ -23,7 +23,7 @@
 <img src="https://github.com/PriyaSuriyamurthi/frontend-nanodegree-arcade-game/blob/master/images/char-pink-girl.png">
 <img src="https://github.com/PriyaSuriyamurthi/frontend-nanodegree-arcade-game/blob/master/images/char-princess-girl.png">
 
-<h2> oh no they are the bugs </h2>
+<h2> oh no they are the bugs</h2>
 <img src="https://github.com/PriyaSuriyamurthi/frontend-nanodegree-arcade-game/blob/master/images/enemy-bug.png">
 
 <h2> Gems to collect </h2>
